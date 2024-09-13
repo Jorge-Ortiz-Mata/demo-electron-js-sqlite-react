@@ -4,7 +4,6 @@ const DailyForm = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [severity, setSeverity] = useState('');
-  const [values, setValues] = useState('');
 
   useEffect(() => {
     window.electronAPI.recordSaved((response) => {
@@ -31,7 +30,6 @@ const DailyForm = () => {
         content: content,
         severity: parseInt(severity, 10),
       });
-      setValues(`Title: ${title}; Content: ${content}; Severity: ${severity}`);
     }
   };
 
@@ -41,6 +39,7 @@ const DailyForm = () => {
         <div>
           <label htmlFor="title">Title:</label>
           <input
+            className='border rounded text-sm font-semibold'
             type="text"
             id="title"
             value={title}
@@ -51,6 +50,7 @@ const DailyForm = () => {
         <div>
           <label htmlFor="content">Content:</label>
           <input
+            className='border rounded text-sm font-semibold'
             type="text"
             id="content"
             value={content}
@@ -61,6 +61,7 @@ const DailyForm = () => {
         <div>
           <label htmlFor="severity">Severity:</label>
           <input
+            className='border rounded text-sm font-semibold'
             type="number"
             id="severity"
             value={severity}
@@ -70,9 +71,6 @@ const DailyForm = () => {
         
         <button type="submit">Submit</button>
       </form>
-      {
-        values.length > 0 && <p>{values}</p>
-      }
     </div>
   );
 };
