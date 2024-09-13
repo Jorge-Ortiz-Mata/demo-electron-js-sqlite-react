@@ -1,7 +1,7 @@
 const path = require('path');
 const { app, BrowserWindow, ipcMain } = require('electron');
 const { initializeDatabase } = require("./database/index");
-const { saveRecord } =require("./database/records");
+const { getAllRecords, saveRecord } =require("./database/records");
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -32,6 +32,16 @@ ipcMain.on('save-record', (event, data) => {
     } else {
       console.log('Record saved:', savedRecord);
       event.reply('record-saved', { success: true, record: savedRecord });
+    }
+  });
+});
+
+ipcMain.on('get-all-records', (event, data) => {
+  getAllRecords((err, records) => {
+    if (err) {
+      event.reply('get-all-records', { success: false, error: err.message });
+    } else {
+      event.reply('get-all-records', { success: true, records });
     }
   });
 });

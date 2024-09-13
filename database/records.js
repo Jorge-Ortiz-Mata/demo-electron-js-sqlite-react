@@ -4,6 +4,17 @@ const path = require('path');
 const dbPath = path.join(__dirname, 'sqlite-demo-database.db');
 const db = new sqlite3.Database(dbPath);
 
+const getAllRecords = (callback) => {
+  db.all('SELECT * FROM records ORDER BY id DESC', [], (err, rows) => {
+    if (err) {
+      console.error('Error retrieving records', err.message);
+      callback(err, null);
+    } else {
+      callback(null, rows);
+    }
+  });
+};
+
 const saveRecord = (data, callback) => {
   const { title, content, severity } = data;
 
@@ -20,5 +31,6 @@ const saveRecord = (data, callback) => {
 };
 
 module.exports = {
+  getAllRecords,
   saveRecord,
 };

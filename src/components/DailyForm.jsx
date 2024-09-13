@@ -1,36 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-const DailyForm = () => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [severity, setSeverity] = useState('');
+const DailyForm = ({ fetchRecords }) => {
+  const [params, setParams] = useState({ title: "", content: "", severity: "" });
 
-  useEffect(() => {
-    window.electronAPI.recordSaved((response) => {
+  const handleOnChange = (e) =>  {
+    const { name, value } = e.target;
+
+    setParams(prevState => { return { ...prevState, [name]: value }});
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    window.electronAPI.saveRecord({
+      title: params.title,
+      content: params.content,
+      severity: parseInt(params.severity, 10),
+    });
+
+    window.electronAPI.onRecordSaved((response) => {
       if (response.success) {
-        console.log('Registro guardado:', response.record);
+        fetchRecords();  
       } else {
         console.error('Error al guardar el registro:', response.error);
       }
     });
-  }, []);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    
-    if (title.trim() === '' || content.trim() === '' || severity.trim() === '') {
-      alert('Todos los campos son obligatorios');
-      return;
-    } else if (isNaN(severity)) {
-      alert('Severity debe ser un número');
-      return;
-    } else {
-      window.electronAPI.saveRecord({
-        title: title,
-        content: content,
-        severity: parseInt(severity, 10),
-      });
-    }
   };
 
   return (
@@ -42,8 +36,9 @@ const DailyForm = () => {
             className='border rounded text-sm font-semibold'
             type="text"
             id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            name="title"
+            value={params.title}
+            onChange={handleOnChange}
           />
         </div>
         
@@ -53,8 +48,9 @@ const DailyForm = () => {
             className='border rounded text-sm font-semibold'
             type="text"
             id="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
+            name="content"
+            value={params.content}
+            onChange={handleOnChange}
           />
         </div>
 
@@ -64,8 +60,9 @@ const DailyForm = () => {
             className='border rounded text-sm font-semibold'
             type="number"
             id="severity"
-            value={severity}
-            onChange={(e) => setSeverity(e.target.value)}
+            name="severity"
+            value={params.severity}
+            onChange={handleOnChange}
           />
         </div>
         
