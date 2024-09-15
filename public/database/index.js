@@ -1,7 +1,8 @@
-const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
+const { app } = require('electron');
+const sqlite3 = require('sqlite3').verbose();
 
-const dbPath = path.join(__dirname, 'sqlite-demo-database.db');
+const dbPath = path.join(app.getPath('userData'), 'sqlite-database.db');
 const db = new sqlite3.Database(dbPath);
 
 const createRecordsTable = () => {

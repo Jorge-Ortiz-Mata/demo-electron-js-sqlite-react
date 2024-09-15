@@ -5,18 +5,17 @@ const { getAllRecords, saveRecord } =require("./database/records");
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1000,
+    height: 700,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, './preload.js'),
       nodeIntegration: true,
       contextIsolation: true,
       enableRemoteModule: true,
     }
   });
 
-  // win.loadURL("http://localhost:3000"); // DEV
-  win.loadURL(`file://${path.join(__dirname, '/build/index.html')}`); // PRD
+  win.loadURL(`file://${path.join(__dirname, "../build/index.html")}`);
   win.webContents.openDevTools();
 }
 

@@ -3,7 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "./",
-  "main": "electron.js",
+  "main": "public/electron.js",
+  "description": "Demo Electron React SQLite App",
+  "author": "Jorge Ortiz",
+  "build": {
+    "appId": "com.demo-electron-react-sqlite.app"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -20,7 +25,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron": "electron .",
-    "dev": "npm run build && npm run electron"
+    "dev": "yarn build && yarn electron",
+    "prd": "yarn build && yarn electron-builder"
   },
   "eslintConfig": {
     "extends": [
@@ -43,7 +49,6 @@
   "devDependencies": {
     "electron": "^32.1.0",
     "electron-builder": "^25.0.5",
-    "electron-is-dev": "^3.0.1",
     "tailwindcss": "^3.4.11"
   }
 }
