@@ -4,6 +4,23 @@ import DailyForm from "./components/DailyForm";
 
 function App() {
   const [records, setRecords] = useState([]);
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+  useEffect(() => {
+    const updateOnlineStatus = () => {
+      setIsOnline(navigator.onLine);
+    };
+
+    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+
+    return () => {
+      window.removeEventListener('online', updateOnlineStatus);
+      window.removeEventListener('offline', updateOnlineStatus);
+    };
+  }, []);
+
+  console.log(isOnline) // Checar conectividad a internet
 
   useEffect(() => {
     fetchRecords(); 
