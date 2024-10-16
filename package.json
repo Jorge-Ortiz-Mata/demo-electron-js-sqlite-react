@@ -7,12 +7,19 @@
   "description": "Demo Electron React SQLite App",
   "author": "Jorge Ortiz",
   "build": {
-    "appId": "com.demo-electron-react-sqlite.app"
+    "appId": "com.demo-electron-react-sqlite.app",
+    "mac": {
+    "target": "dmg"
+    },
+    "win": {
+      "target": "nsis"
+    }
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "fs": "^0.0.1-security",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
